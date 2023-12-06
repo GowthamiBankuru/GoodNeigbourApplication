@@ -1,0 +1,32 @@
+
+*{
+  font-family:Arial, Helvetica, sans-serif;
+}
+.center{
+  color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-card-title{
+  color: #000;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.footer{
+  text-align: center;
+  position: relative;
+  p{
+    font-size: medium;
+    a{
+      text-decoration: none;
+      color: #2dd36f;
+    }
+  }
+}
+ion-content{
+  position: relative;
+}

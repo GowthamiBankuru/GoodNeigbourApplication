@@ -1,0 +1,126 @@
+
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Define responsive styles for the body */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1025px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+// colors.scss
+$primary-color: #dd1840;
+$secondary-color: #007bff;
+$button-background-color: #000000;
+$button-text-color: #ffffff;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$dark-color: #1e1e1d;
+$warning-color: #dd1840;
+$background-color: #f5f5f5;
+$font-family: 'Arial, sans-serif';
+
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #{$primary-color};
+    --secondary-color: #{$secondary-color};
+    --background-color: #{$background-color};
+    --button-background-color: #{$button-background-color};
+    --dark: #{$dark-color};
+    --white: #{$button-text-color};
+    --font-family: #{$font-family};
+    --animate-duration: 800ms;
+    --animate-delay: 0.9s;
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+mat-card{
+  margin: 1%;
+  // background-color: var(--background-color);
+  border-radius: 10px;
+}
+
+.btn-color{
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+
+mat-card-header{
+  height: 40px;
+  background-color:  var(--primary-color);
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+ion-footer{
+  background-color: #f5f5f5;
+}
+
+
+@media (max-width: 960px) {
+  mat-card{
+    margin-top: 38%;
+    border-radius: 10px;
+  }
+}
+
+/* global.scss */
+
+.no-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.no-data-icon {
+  font-size: 4em;
+  color: #ff6961; /* You can change the color to your preference */
+}
+
+.no-data-message {
+  margin-top: 10px;
+  font-size: 1.5em;
+  color: #777; /* You can change the color to your preference */
+}

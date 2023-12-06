@@ -1,0 +1,28 @@
+<ion-header [translucent]="false">
+  <h3><strong class="center">Login To UniDineHub</strong></h3>
+</ion-header>
+
+<ion-content [fullscreen]="false">
+  <img src="../../../assets/loginApp.png" alt="worng path" width="100%" class="ion-text-center" class="ion-padding"
+    style="background-size: contain;">
+  <div class="ion-padding ion-margin animate__animated animate__fadeIn" *ngIf="loginflag">
+    <form #loginForm="ngForm">
+      <ion-item fill="outline">
+        <ion-label position="floating">Username</ion-label>
+        <ion-input placeholder="Enter Username" name="username" id="username" [(ngModel)]="credentials.username"></ion-input>
+      </ion-item>
+      <br>
+      <ion-item fill="outline">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input placeholder="Enter Password" type="password" name="userpassword" id="userpassword" [(ngModel)]="credentials.password"></ion-input>
+      </ion-item><br>
+    </form>
+      <ion-button shape="round" fill="solid" expand="block" color="dark"
+      [ngStyle]="{'opacity': !loginForm.form.valid ? '0.5' : '1'}" [disabled]="!loginForm.form.valid"
+      (click)="SignIN();">Login</ion-button>
+      <br>
+  </div>
+  <div class="footer" *ngIf="loginflag">
+    <p>Iam new Customer, <a routerLink="/signup" style="color: var(--primary-color);">Sign Up</a></p>
+  </div>
+</ion-content>

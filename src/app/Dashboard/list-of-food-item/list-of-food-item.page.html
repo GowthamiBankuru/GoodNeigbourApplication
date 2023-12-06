@@ -1,0 +1,39 @@
+<!-- src/app/home/home.page.html -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title color="primary">
+      Food Items
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of foodObjects">
+        <ion-card class="food-card">
+          <img [src]="item.image" alt="Food Image" class="food-image">
+          <ion-card-content>
+            <h4 style="color: black;"><b>{{item.foodName}}</b></h4>
+            <p class="brand">{{item.foodBrandCompany}}</p>
+            <p class="brand">{{item.foodCalories}}</p>
+            <p class="brand text">{{item.foodAddress}}</p>
+            <ion-buttons slot="end">
+              <ion-button (click)="decreaseQuantity(item)" class="ion-padding-horizontal">-</ion-button>
+              <ion-label style="text-align: center;">{{ item.quantity }}</ion-label>
+              <ion-button (click)="increaseQuantity(item)" class="ion-padding-horizontal">+</ion-button>
+            </ion-buttons>
+            <h3 class="cost mb-3" >{{item.price | currency:'USD':'symbol':'1.2-2'}}</h3>
+            <ion-button (click)="addToCart(item);" style="width: fit-content;" expand="full" size="small" shape="round" style="margin: auto;">Add to Cart
+              <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

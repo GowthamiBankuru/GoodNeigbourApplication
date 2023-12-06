@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/foodmenuitemlist"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="primary">
+      My Cart
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+<ion-content padding *ngIf="cartItems.length === 0">
+  <div class="no-data-container">
+    <ion-icon name="warning-outline" class="no-data-icon"></ion-icon>
+    <p class="no-data-message">No data found</p>
+  </div>
+</ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of cartItems">
+      <ion-thumbnail slot="start">
+        <img src="{{ item.image }}" alt="{{ item.name }}" width="100" height="100">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ item.name }}</h2>
+        <p>{{ item.price * item.quantity | currency: 'USD':'symbol':'1.2-2' }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="decreaseQuantity(item)">-</ion-button>
+        <ion-label style="text-align: end;">{{ item.quantity }}</ion-label>
+        <ion-button (click)="increaseQuantity(item)">+</ion-button>
+      </ion-buttons>
+      <ion-button slot="end" (click)="removeItem(item)">Remove</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar slot="end">
+    <ion-title>Total Cost : <span style="color: var(--primary-color);">{{getTotalPrice() | currency: 'USD':'symbol':'1.2-2'}}</span></ion-title>
+  </ion-toolbar>
+</ion-footer>

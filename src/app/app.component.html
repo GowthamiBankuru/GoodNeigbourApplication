@@ -1,0 +1,88 @@
+<ion-menu contentId="main-content">
+  <ion-content>
+    <ion-toolbar>
+      <ion-menu-button></ion-menu-button>
+      <div class="menu-header-bg"></div>
+      <div class="header-content">
+        <img src="../assets/userlogo.png" width="100" height="100" alt="" />
+        <ion-label>
+          <h1 style="font-weight: bold;color: #000;" >Pavan</h1>
+          <p>pavan@gmail.com</p>
+          <p>Customer</p>
+        </ion-label>
+      </div>
+      <div class="action-button">
+        <ion-button>
+          <!-- <ion-icon slot="start" name="add"></ion-icon> Add Branch -->
+          <ion-toggle
+            slot="end"
+            color="success"
+            (ionChange)="toggleTheme($event)"
+          ></ion-toggle>
+        </ion-button>
+      </div>
+      <div class="menu-items">
+        <ion-list lines="none">
+          <ion-menu-toggle>
+            <ion-item routerLink="/foodmenuitemlist">
+              <ion-icon name="grid-outline"></ion-icon> Menu
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle>
+            <ion-item routerLink="/upComingEvent">
+              <ion-icon name="person-outline"></ion-icon> My Account
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle>
+            <ion-item routerLink="/addtocarts">
+              <ion-icon name="cart-outline"></ion-icon> My Cart
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item routerLink="/event">
+              <ion-icon name="mail-outline"></ion-icon> Contact Us
+            </ion-item>
+          </ion-menu-toggle>
+                    
+          <ion-menu-toggle>
+            <ion-item (click)="logout();">
+              <ion-icon name="log-out-outline"></ion-icon> Logout
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </div>
+      <div class="footer-content">
+      </div>
+    </ion-toolbar>
+  </ion-content>
+  <ion-footer>
+    <ion-toolbar color="primary">
+      <ion-title class="ion-text-center" style="font-size: medium;">
+        © CopyRight - UniDineHub
+      </ion-title>
+    </ion-toolbar>
+  </ion-footer>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header class="scroll-toolbar" [class.hidden]="hideToolbar" id="scrollToolbar">
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button color="light"></ion-menu-button>
+      </ion-buttons>
+      <ion-title color="light">UniDineHub</ion-title>
+      <ion-buttons slot="end" style="position: relative;" routerLink="/addtocarts">
+        <!-- Replace 'cart' with the name of the cart icon you want to use from Ionicons -->
+        <ion-icon name="cart" color="light"style="font-size: xx-large;"></ion-icon>
+        <!-- Add the counter badge with the count variable -->
+        <ion-badge  style="position: absolute; top: 0px; right: 0px;">{{ cartItemCount }}</ion-badge>
+      </ion-buttons>
+      
+      
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-content>
+</div>
