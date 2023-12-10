@@ -1,0 +1,46 @@
+<ion-header [translucent]="false">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title><strong>Help Desk</strong></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #createContact="ngForm">
+    <ion-row class="ion-margin-top">
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">Subject</ion-label>
+          <ion-input placeholder="Subject" name="subject" [(ngModel)]="saveContactObject.subject" required
+            [readonly]="level === 'edit'" required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-card color="primary" style="width: 100%;">
+        <h4 *ngIf="level === 'edit'" style="text-align: center;"><strong>Help History</strong></h4>
+        <ion-card style="padding: 25px;" [innerHTML]="historyMessage" class="message" *ngIf="level === 'edit'"></ion-card>
+      </ion-card>
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12"  *ngIf="level === 'edit'">
+        <ion-textarea label="Reply Message" rows="20" labelPlacement="floating" [autoGrow]="true" [counter]="true"
+        [(ngModel)]="replyMessage" required [readonly]="level !== 'edit'"
+          fill="outline" placeholder="Message" name="message" required></ion-textarea>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12" *ngIf="level !== 'edit'">
+        <ion-textarea label="Message" rows="20" labelPlacement="floating" [autoGrow]="true" [counter]="true"
+        [(ngModel)]="saveContactObject.message" required
+          fill="outline" placeholder="Message" name="message" required></ion-textarea>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>
+
+<ion-footer style="background-color: #FEB518;">
+  <ion-button *ngIf="level !== 'edit'" type="submit" expand="block" [ngStyle]="{'opacity': !createContact.form.valid ? '0.5' : '1'}"
+    [disabled]="!createContact.form.valid" (click)="saveContact();">Send</ion-button>
+
+  <ion-button *ngIf="level === 'edit'" type="submit" expand="block" [ngStyle]="{'opacity': !createContact.form.valid ? '0.5' : '1'}"
+    [disabled]="!createContact.form.valid" (click)="updateContact();">Send</ion-button>
+</ion-footer>

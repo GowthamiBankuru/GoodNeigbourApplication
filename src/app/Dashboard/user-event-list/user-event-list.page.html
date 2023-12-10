@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Upcomming Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar type="text" animated="true" [(ngModel)]="searchQuery" (input)="searchEvents()"
+    (keydown)="onKeyDown($event)" placeholder="Search for events ... " *ngIf="!noDataFoundFlag"></ion-searchbar>
+    <ng-container *ngIf="responseData.length === 0">
+      <div class="no-data-container">
+        <ion-icon name="warning-outline" class="no-data-icon"></ion-icon>
+        <p class="no-data-message">No data found</p>
+      </div>
+    </ng-container>
+  <ng-container *ngIf="!noDataFoundFlag && responseData.length !== 0">
+    <ion-card *ngFor="let item of responseData;">
+      <div style="float: right; font-size: 24px;" (click)="toggleMenu(item)">
+        <ion-icon [name]="item.showMenu ? 'caret-up' : 'caret-down'"></ion-icon>
+      </div>
+
+      <ion-list *ngIf="item.showMenu">
+        <ion-item *ngIf="userObjectList.length === 0">
+          <ion-icon name="person"></ion-icon>
+          No User Assigned
+        </ion-item>
+        <ion-item *ngFor="let user of userObjectList">
+          <ion-icon name="person" style="margin-right: 10px;"></ion-icon>
+          {{ user.username }}
+        </ion-item>
+      </ion-list>
+
+      <ion-card-header>
+        <ion-card-title><strong>{{ item.eventName }}</strong></ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>{{ item.eventVenue }}</p>
+        <h2>{{ commonService.getFormattedDate(item.eventDate) }}</h2>
+      </ion-card-content>
+
+      <ion-button expand="full" color="primary" (click)="assign(item)" *ngIf="item.status === 13 || !item.status">
+        Volunteer Now
+      </ion-button>
+      <ion-button expand="full" color="danger" (click)="leave(item)" *ngIf="item.status === 11">
+        Leave Now
+      </ion-button>
+    </ion-card>
+  </ng-container>
+
+
+</ion-content>

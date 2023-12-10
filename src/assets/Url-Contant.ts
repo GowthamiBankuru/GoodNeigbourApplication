@@ -1,7 +1,7 @@
 export class UrlContant {
-  private static readonly baseUrl = 'http://192.168.1.12:8080/api/';
+  // private static readonly baseUrl = 'http://192.168.12.175:8080/api/';
 
-  // private static readonly baseUrl = 'https://ourgoodneighbour.fun/api/';
+  private static readonly baseUrl = 'https://ourgoodneighbour.fun/api/';
 
   public static readonly authenticateUrl = `${UrlContant.baseUrl}authenticate`;
   public static readonly CreateRoleUrl = `${UrlContant.baseUrl}role/createRole`;

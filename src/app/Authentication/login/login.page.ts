@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, NavController, Platform } from '@ionic/angular';
+import { AuthService } from 'src/app/service/auth.service';
+import { PostService } from 'src/app/service/post.service';
 import { LoginObject } from './LoginObject';
 import { UserDefinedLabels } from 'src/assets/labelsContants';
 
@@ -16,7 +18,7 @@ export class LoginPage implements OnInit {
   private backButtonSubscription;
   constructor( private platform: Platform
     ,private navCtrl: NavController,
-    private alertController: AlertController, private router: Router) { }
+    private alertController: AlertController, private router: Router, private service$: PostService, private authService: AuthService) { }
 
   // constructor() { }
 
@@ -35,19 +37,56 @@ export class LoginPage implements OnInit {
     this.credentials = new LoginObject();
   }
 
-  async SignIN() {
-    if (this.credentials.username == 'pk' && this.credentials.password == 'pk') {
-      this.router.navigateByUrl('/foodmenuitemlist');
+  SignIN() {
+    this.service$.LoginUser(this.credentials).subscribe(
+      (data: any) => {
+        if (data && data[this.labels.result] && data[this.labels.result].length > 0) {
+          this.handleSuccessfulLogin(data[this.labels.result][0]);
+        } else {
+          this.handleLoginFailure("Login Failed");
+        }
+      },
+      (error: any) => {
+        this.handleLoginFailure("Login Failed");
+      }
+    );
+  }
+
+  handleSuccessfulLogin(responseObject: any) {
+    sessionStorage.setItem('userObject', JSON.stringify(responseObject));
+    sessionStorage.setItem('userID', responseObject.userID);
+    sessionStorage.setItem('currentUserRole', responseObject.roleName);
+    sessionStorage.setItem('access_token', responseObject.token);
+    this.authService.setData(responseObject.roleName);
+    this.authService.setDataUserObject(responseObject);
+
+    if (responseObject.roleName == 'Admin') {
+      this.navCtrl.navigateRoot('/leaderBoard');
+    } else if (responseObject.roleName == 'Volunteer') {
+      this.navCtrl.navigateRoot('/upComingEvent');
     }
-    else{
-      const alert = await this.alertController.create({
-        header: 'Login Failed',
-        message: 'Wrong Credentials',
-        buttons: ['OK']
-      });
-      await alert.present();
-      console.log('Login Failed!'); 
-    }
+
+    console.log('Login done Successfully!');
+  }
+
+  async handleLoginFailure(errorMessage: string) {
+    const alert = await this.alertController.create({
+      header: 'Login Failed',
+      message: 'Wrong Credentials',
+      buttons: ['OK']
+    });
+    await alert.present();
+    console.log('Login Failed!');
+  }
+
+  async showAlert(message1) {
+    const alert = await this.alertController.create({
+      header: 'Alert',
+      subHeader: message1,
+      message: '',
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
 }

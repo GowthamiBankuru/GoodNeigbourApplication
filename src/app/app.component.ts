@@ -1,54 +1,41 @@
-import { Component, DoCheck, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartService } from './Service/cart.service';
+import { AuthService } from './service/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent implements OnInit ,DoCheck{
+export class AppComponent implements OnInit {
   themeFlag = true;
-  cartItemCount:any = 0;
   currentRoleFlag: boolean = true;
   menuFlag: boolean = false;
   currentUserRole: string | null | undefined;
-  userObject: any | null | undefined;
-  constructor(private router: Router,private cartService: CartService) { }
-  ngDoCheck(): void {
-    this.cartService.getProducts().subscribe((data: any) => {
-      this.cartItemCount = this.cartService.getCartItemCount();
+  userObject: any = {};
+  constructor(private router: Router, private authService$: AuthService) { }
+
+
+  ngOnInit(): void {
+    this.authService$.getDataUserObject().subscribe(data => {
+      this.userObject = data != null ? data : JSON.parse(sessionStorage.getItem("userObject"));
+      console.log('userObject', this.userObject);
+
+    })
+
+    this.authService$.data$.subscribe(data => {
+      this.currentUserRole = data !== null ? data : sessionStorage.getItem("currentUserRole");
+      this.menuFlag = true;
+      console.log('this.currentUserRole', this.currentUserRole, this.menuFlag);
     });
-  }
-
-
-  
-
-  ngOnInit(): void {    
-    this.userObject = JSON.parse(sessionStorage.getItem("userObject"));
-    console.log('this.userObject', this.userObject);
-    try {
-
-
-      // Check if userObject is not null before accessing its properties
-      if (this.userObject !== null && typeof this.userObject === 'object') {
-        // Assuming 'username' is a property of the userObject
-        const username = this.userObject.username;
-        // Use 'username' as needed
-      } else {
-        // Handle the case where userObject is null or not an object
-        // console.error("Invalid userObject:", this.userObject);
-        // You might want to provide a default value or take other appropriate actions
-        this.userObject = {}; // or any default value
+    if (this.authService$.getUserRole()) {
+      if (this.currentUserRole === 'Admin') {
+        this.currentRoleFlag = true;
       }
-    } catch (error) {
-      // Handle the error here
-      console.error("Error parsing userObject:", error);
-
-      // You might want to provide a default value or take other appropriate actions
-      this.userObject = {}; // or any default value
+      if (this.currentUserRole === 'Volunteer') {
+        this.currentRoleFlag = true;
+      }
     }
-
   }
   toggleTheme(event: any) {
     if (event.detail.checked) {

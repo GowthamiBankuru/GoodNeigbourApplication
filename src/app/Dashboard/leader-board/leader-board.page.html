@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start" *ngIf="this.currentRole === 'Volunteer'">
+      <ion-back-button defaultHref="/upComingEvent"></ion-back-button>
+    </ion-buttons>
+    <ion-title>User Leader Board</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding *ngIf="responseData.length === 0">
+  <div class="no-data-container">
+    <ion-icon name="warning-outline" class="no-data-icon"></ion-icon>
+    <p class="no-data-message">No data found</p>
+  </div>
+</ion-content>
+
+<ion-content>
+    <ion-content color="light">
+      <ion-list [inset]="true" *ngFor="let item of responseData">
+        <ion-item>
+          <ion-thumbnail class="ion-margin-horizontal">
+            <img alt="Silhouette of mountains"
+              [src]="item.url" />
+          </ion-thumbnail>
+          <ion-label>
+            <ion-text color="primary">
+              <h1>{{item.userName}}</h1>
+            </ion-text>
+            <sub><b>{{item.rewardName}}</b></sub>
+            <br />
+            <sub style="font-size:14px">Point : {{item.totalRewardPoint}}</sub>
+            <strong></strong>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+</ion-content>

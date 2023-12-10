@@ -1,9 +1,10 @@
 .menu-header-bg{
-  height: 240px;
+  height: 180px;
   width: 350px;
-  background: linear-gradient(265deg, #dd1840, 0%, #dd1840);
-  box-shadow: 0px 1px 10px rgba(221, 24, 64, 0.0196078431);
-  transform: rotate(180deg);
+  // background: #FEB518;
+  background: linear-gradient(90deg,#FEB518,0%,#FEB518);
+  box-shadow: 0px 1px 10px #FEB51805;
+  transform: rotate(358deg);
   border-radius: 10px 10px 10px 50px;
   margin-left: -10px;
   margin-top: -40px;
@@ -42,7 +43,7 @@
   ion-button{
     text-transform: capitalize;
     font-weight: 300;
-    --background:#dd1840;
+    --background:#FEB518;
     --border-radius: 7px;
     --box-shadow:none;
     --color: white;
@@ -57,19 +58,19 @@
   margin: 0px;
   ion-icon{
     margin-right: 20px;
-    color: #dd1840  ;
+    color: #FEB518  ;
   }
   ion-item{
     padding-left: 20px;
     margin-bottom: 10px;
   }
   .active{
-    border-left: 5px solid #dd1840;
+    border-left: 5px solid #FEB518;
     padding-left: 15px;
   }
 }
 ion-icon{
-  color: #dd1840;
+  color: #FEB518;
 }
 
 .footer-content{

@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="level === 'edit'?'/searchEvent':'/leaderBoard'"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{level != 'edit'?'Create Event':'Update Event'}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #createEvent="ngForm">
+    <ion-row class="ion-margin-top">
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">Event Name</ion-label>
+          <ion-input placeholder="Event Name" name="eventName" [(ngModel)]="saveEventObject.eventName"
+            required></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">Event Venue</ion-label>
+          <ion-input placeholder="Event Venue" name="eventVenue" [(ngModel)]="saveEventObject.eventVenue"
+            required></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">No Of Volunteer</ion-label>
+          <ion-input placeholder="No Of Volunteer" name="numberOfGuests" [(ngModel)]="saveEventObject.numberOfGuests"
+            required></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label color="primary">Event Date</ion-label>
+          <ion-datetime-button datetime="date"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime presentation="date" id="datetime" [(ngModel)]="selectedDate"
+              displayFormat="MM-DD-YYYY"
+              id="date" [min]="minDate" [max]="maxDate"
+              [ngModelOptions]="{ standalone: true }"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </form>
+
+
+  <ion-accordion-group [value]="['first']" *ngIf="level === 'edit'">
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label color="primary">User Volunteered Event</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-toolbar style="text-align: center;"
+          *ngIf=" level == 'edit' && level != 'profile'  && userObjectList.length === 0">
+          No Data Found
+        </ion-toolbar>
+        <ion-list *ngFor="let item of userObjectList">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>
+                <strong style="color: var(--primary-color); font-size: large;">{{item.userID}} :
+                  {{item.username}}</strong>
+                <br>
+                <span class="custom-text" style="font-size: small;">{{item.roleName}}</span>
+                <br>
+                <p class="custom-text">{{item.joiningEventUser[0].rewardPoint}}</p>
+              </ion-label>
+              <ion-checkbox justify="end" [name]="'attendance_' + item.userID" *ngIf="!item.attendend"
+                [id]="'attendance_' + item.userID" [(ngModel)]="item.userAttended"
+                (ionChange)="setAll($event.detail.checked)"></ion-checkbox>
+            </ion-item>
+            <ion-item-options side="end" *ngIf="!item.attendend">
+              <ion-item-option color="warning" (click)="processUserEvent(item)">
+                <ion-icon slot="icon-only" color="light" name="information-circle-sharp"></ion-icon>
+              </ion-item-option>
+
+              <ion-item-option color="danger" id="present-alert" (click)="removeUserEvent(item)">
+                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-content>
+
+<ion-footer style="background-color: #FEB518;">
+  <ion-button *ngIf="level !== 'edit'" type="submit" expand="block"
+    [ngStyle]="{'opacity': !createEvent.form.valid ? '0.5' : '1'}" [disabled]="!createEvent.form.valid"
+    (click)="saveEvent();">Submit</ion-button>
+
+  <ion-button *ngIf="level === 'edit'" type="submit" expand="block"
+    [ngStyle]="{'opacity': !createEvent.form.valid ? '0.5' : '1'}" [disabled]="!createEvent.form.valid"
+    (click)="updateEvent();">Update</ion-button>
+</ion-footer>

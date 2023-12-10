@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="level === 'edit'?'/searchReward':'/leaderBoard'"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{level != 'edit'?'Create Reward':'Update Reward'}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #createEvent="ngForm">
+    <ion-row class="ion-margin-top">
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">Reward Name</ion-label>
+          <ion-input placeholder="Reward Name" name="rewardName" [(ngModel)]="saveRewardObject.rewardName"
+            required></ion-input>
+        </ion-item>
+      </ion-col>
+
+
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline" color="primary">
+          <ion-select label="Reward Type" color="primary" interface="action-sheet" [(ngModel)]="saveRewardObject.rewardType"
+            [ngModelOptions]="{ standalone: true }" placeholder="Select Reward Type">
+            <ion-select-option [value]="item" *ngFor="let item of rewardTypeList">{{item}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline" color="primary">
+          <ion-select label="Reward Availability" interface="action-sheet" color="primary" [(ngModel)]="saveRewardObject.rewardAvailability"
+            [ngModelOptions]="{ standalone: true }" placeholder="Reward Availability">
+            <ion-select-option [value]="item" *ngFor="let item of rewardAvailabilityList">{{item}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">Expire Date</ion-label>
+          <ion-input placeholder="Expire Date" name="expireDate" id="expireDate" [(ngModel)]="selectedDate" readonly></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
+
+<ion-footer style="background-color: #FEB518;">
+  <ion-button *ngIf="level !== 'edit'" type="submit" expand="block"
+    [ngStyle]="{'opacity': !createEvent.form.valid ? '0.5' : '1'}" [disabled]="!createEvent.form.valid"
+    (click)="saveReward();">Submit</ion-button>
+
+  <ion-button *ngIf="level === 'edit'" type="submit" expand="block"
+    [ngStyle]="{'opacity': !createEvent.form.valid ? '0.5' : '1'}" [disabled]="!createEvent.form.valid"
+    (click)="updateReward();">Update</ion-button>
+</ion-footer>

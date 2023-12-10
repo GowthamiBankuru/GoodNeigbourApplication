@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/upComingEvent"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Help Desk History</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding *ngIf="responseData.length === 0">
+  <div class="no-data-container">
+    <ion-icon name="warning-outline" class="no-data-icon"></ion-icon>
+    <p class="no-data-message">No data found</p>
+  </div>
+</ion-content>
+
+<ion-content color="light">
+  <ion-list *ngFor="let item of responseData">
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label>
+          <strong>{{item.email.replace('@gmail.com', '')}}</strong>
+          <br>
+          <span class="custom-text"
+            style="width: 150px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><b>Subject:
+            </b>{{item.subject}}</span>
+          <br>
+          <span class="custom-text">
+            <strong>Message:</strong> {{item.message}}
+          </span>
+        </ion-label>
+
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="warning" (click)="editContact(item)">
+          <ion-icon slot="icon-only" name="send" color="light"></ion-icon>
+        </ion-item-option>
+
+        <ion-item-option color="danger" id="present-alert" (click)="deleteContact(item)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+        <ion-alert trigger="present-alert" header="Alert!" [buttons]="alertButtons"
+          (didDismiss)="setResult($event)"></ion-alert>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>

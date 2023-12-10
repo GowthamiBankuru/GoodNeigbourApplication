@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="level === 'edit'?'/searchUser':'/leaderBoard'"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{level === 'edit' ? labels.Edit_User : level == 'profile' ? 'Update Profile' :labels.Create_User}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #createUser="ngForm">
+    <ion-row class="ion-margin-top">
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">User Name</ion-label>
+          <ion-input placeholder="User Name" name="eventName" id="eventName" [(ngModel)]="saveUserObject.username" required></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">User Email</ion-label>
+          <ion-input placeholder="User Email" type="email" name="userEmail" id="userEmail" [(ngModel)]="saveUserObject.userEmail" required></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">Password</ion-label>
+          <ion-input type="Password" placeholder="Password" name="userPassword" [(ngModel)]="saveUserObject.userPassword" required></ion-input>
+        </ion-item>
+      </ion-col>
+
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label color="primary">DOB</ion-label>
+          <ion-datetime-button datetime="date"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime presentation="date" id="datetime" [(ngModel)]="selectedDate"
+              displayFormat="YYYY-MM-DD"
+              id="date" [max]="maxDate"
+              [ngModelOptions]="{ standalone: true }"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating" color="primary">Phone</ion-label>  
+          <ion-input placeholder="Phone" name="phoneNumber" [(ngModel)]="saveUserObject.phoneNumber" required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline"  color="primary">
+          <ion-select label="Gender" color="primary" interface="action-sheet" [(ngModel)]="saveUserObject.gender"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="Select Gender">
+          <ion-select-option [value]="item" *ngFor="let item of GenderList">{{item}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+        <ion-item fill="outline" color="primary">
+          <ion-select label="Role" color="primary" interface="action-sheet" [(ngModel)]="saveUserObject.roleName"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="Select Role">
+          <ion-select-option [value]="item" *ngFor="let item of RoleList">{{item}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      </ion-col>
+
+      <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12" *ngIf="level === 'edit' || level == 'profile'">
+        <ion-item fill="outline" color="primary">
+          <ion-select label="Account Status" color="primary" interface="action-sheet" [(ngModel)]="saveUserObject.accountStatus"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="Account Status">
+          <ion-select-option [value]="item" *ngFor="let item of statusList">{{item}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      </ion-col>
+      
+    </ion-row>
+  </form>
+
+  <ion-accordion-group *ngIf="level === 'edit'">
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label color="primary">User Volunteered Event</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-toolbar style="text-align: center;"
+            *ngIf=" level == 'edit' && level != 'profile'  && userEventObjectList.length === 0">
+            No Data Found
+        </ion-toolbar>
+        <ion-list *ngFor="let item of userEventObjectList">
+          <ion-item-sliding>
+            <ion-item>
+              <ion-label>
+                <strong style="color: var(--primary-color);">{{item.eventID}} : {{item.eventName}}</strong>
+                <br>
+                <span class="custom-text">{{item.eventVenue}}</span>
+                <br>
+                <p class="custom-text">{{item.eventDate}} </p>
+              </ion-label>
+            </ion-item>
+          </ion-item-sliding>
+        </ion-list>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-content>
+
+<ion-footer style="background-color: #FEB518;">
+  <ion-button *ngIf="level !== 'edit'" type="submit" expand="block" [ngStyle]="{'opacity': !createUser.form.valid ? '0.5' : '1'}"
+    [disabled]="!createUser.form.valid" (click)="saveUser();">Submit</ion-button>
+
+  <ion-button *ngIf="level === 'edit'" type="submit" expand="block" [ngStyle]="{'opacity': !createUser.form.valid ? '0.5' : '1'}"
+    [disabled]="!createUser.form.valid" (click)="updateuser();">Update</ion-button>
+</ion-footer>

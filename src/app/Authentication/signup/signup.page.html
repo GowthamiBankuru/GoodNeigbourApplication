@@ -1,50 +1,87 @@
 
 <ion-content [fullscreen]="false">
-  <h1><strong class="center">Create Your Account</strong></h1>
-  <img src="../../../assets/signupApp.png" alt="worng path" width="100%" class="ion-text-center" class="ion-padding" style="background-size: contain;">
+  <h1><strong class="center">Sign-Up To Volunteer</strong></h1>
+  <img src="../../../assets/icon/login.png" alt="worng path" width="100%" class="ion-text-center" class="ion-padding" style="background-size: contain;">
   <div class="ion-padding ion-margin animate__animated animate__fadeIn animate__delay-.5s">
     <form #createUser="ngForm">
       <ion-row class="ion-margin-top">
         <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
           <ion-item fill="outline">
-            <ion-label position="floating" color="dark">User Name</ion-label>
-            <ion-input placeholder="Choose a unique User Name" name="eventName" id="eventName" [(ngModel)]="loginObject.username" required></ion-input>
+            <ion-label position="floating" color="primary">User Name</ion-label>
+            <ion-input placeholder="User Name" name="eventName" id="eventName" [(ngModel)]="loginObject.username" required></ion-input>
           </ion-item>
         </ion-col>
   
         <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
           <ion-item fill="outline">
-            <ion-label position="floating" color="dark">First Name</ion-label>
-            <ion-input placeholder="First Name" type="text" name="firstName" id="firstName" [(ngModel)]="loginObject.firstName" required></ion-input>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
-          <ion-item fill="outline">
-            <ion-label position="floating" color="dark">Last Name</ion-label>
-            <ion-input placeholder="First Name" type="text" name="lasttName" id="lasttName" [(ngModel)]="loginObject.lasttName" required></ion-input>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
-          <ion-item fill="outline">
-            <ion-label position="floating" color="dark">Email Address</ion-label>
-            <ion-input placeholder="Email Address" type="email" name="userEmail" id="userEmail" [(ngModel)]="loginObject.userEmail" required></ion-input>
+            <ion-label position="floating" color="primary">User Email</ion-label>
+            <ion-input placeholder="User Email" type="email" name="userEmail" id="userEmail" [(ngModel)]="loginObject.userEmail" required></ion-input>
           </ion-item>
         </ion-col>
   
         <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
           <ion-item fill="outline">
-            <ion-label position="floating" color="dark">Password</ion-label>
-            <ion-input type="password" placeholder="Password" name="userPassword" [(ngModel)]="loginObject.userPassword" required></ion-input>
+            <ion-label position="floating" color="primary">Password</ion-label>
+            <ion-input type="Password" placeholder="Password" name="userPassword" [(ngModel)]="loginObject.userPassword" required></ion-input>
           </ion-item>
         </ion-col>
+
+        <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+          <ion-item fill="outline">
+            <ion-label position="floating" color="primary">Re-Password</ion-label>
+            <ion-input type="Password" placeholder="Re-Password" name="Re-Password" [(ngModel)]="loginObject.Re_userPassword" required></ion-input>
+          </ion-item>
+        </ion-col>
+  
+        <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+          <ion-item fill="outline">
+            <ion-label color="primary">DOB</ion-label>
+            <ion-datetime-button datetime="date"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime presentation="date" id="datetime" [(ngModel)]="selectedDate"
+                displayFormat="MM-DD-YYYY"
+                id="date" [max]="maxDate"
+                [ngModelOptions]="{ standalone: true }"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </ion-col>
+
+        
+  
+        <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+          <ion-item fill="outline">
+            <ion-label position="floating" color="primary">Phone</ion-label>  
+            <ion-input placeholder="Phone" name="phoneNumber" [(ngModel)]="loginObject.phoneNumber" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+          <ion-item fill="outline"  color="primary">
+            <ion-select label="Gender" color="primary" interface="action-sheet" [(ngModel)]="loginObject.gender"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Select Gender">
+            <ion-select-option [value]="item" *ngFor="let item of GenderList">{{item}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        </ion-col>
+  
+        <ion-col size="12" size-xl="3" size-lg="4" size-md="6" size-sm="6" size-xs="12">
+          <ion-item fill="outline" color="primary">
+            <ion-select label="Role" color="primary" interface="action-sheet" [(ngModel)]="loginObject.roleName"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Select Role">
+            <ion-select-option [value]="item" *ngFor="let item of RoleList">{{item}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        </ion-col>
+        
       </ion-row>
     </form>
-    <ion-button shape="round" fill="solid" expand="block" color="dark" (click)="SignUp();">Register</ion-button>
+    <ion-button shape="round" fill="solid" expand="block" color="warning" (click)="SignUp();">Register</ion-button>
     <br>
   </div>
   <div class="footer">
-      <p style="text-align: center;">Already have an account?, <a routerLink="/login">Login</a></p>
+      <p style="text-align: center;">Alread customer, <a routerLink="/login">Login</a></p>
   </div>
 </ion-content>
